@@ -3,34 +3,35 @@ document.getElementsByTagName("button")[0].addEventListener("click",
     var input_num = document.getElementById("value_num");
     var h1 = document.getElementById("text_for_user");
 
-    var phrases = {
+    var PHRASES = {
       not_right_input: "вы должны ввести одно число",
       say_avarage_num: "Среднее число "
     }
 
     allResult = function() {
-      if (IsInputNum()) {
+      if (isInputNum()) {
         addAvarageNumAndCreateBase();
         input_num.value = "";
+      }else{
+        h1.innerText = PHRASES.not_right_input;
       }
     }
 
-    IsInputNum = function() {
+    isInputNum = function() {
       if (input_num.value != "" && !isNaN(input_num.value)) {
         return true;
       }else {
-        h1.innerText = phrases.not_right_input;
+        return false;
       }
     }
 
     addAvarageNumAndCreateBase = function(){
       if (!localStorage.numbers) {
         localStorage.numbers = toJSON([input_num.value]);
-        h1.innerText = phrases.say_avarage_num + input_num.value;
+        h1.innerText = PHRASES.say_avarage_num + input_num.value;
       }else {
         var elem = parseJSON(localStorage.numbers);
         elem.push(input_num.value);
-        console.log(elem);
         localStorage.numbers = toJSON(elem);
         computationAvarageNum(elem);
       }
@@ -41,8 +42,8 @@ document.getElementsByTagName("button")[0].addEventListener("click",
       for (var i = 0; i < arr_nums.length; i++) {
         sum += +arr_nums[i];
       }
-      var result_avarage = sum / arr_nums.length;
-      h1.innerText = phrases.say_avarage_num +  Math.round(result_avarage);
+      var result_avarage = Math.round(sum / arr_nums.length);
+      h1.innerText = PHRASES.say_avarage_num + result_avarage;
     }
 
     toJSON = function(obj){
