@@ -38,11 +38,10 @@ document.getElementsByTagName("button")[0].addEventListener("click",
     }
 
     computationAvarageNum = function(arr_nums){
-      var sum = 0;
-      for (var i = 0; i < arr_nums.length; i++) {
-        sum += +arr_nums[i];
-      }
-      var result_avarage = Math.round(sum / arr_nums.length);
+      var all_sum = arr_nums.reduce(function(sum, item) {
+        return sum + (+item);
+      }, 0);
+      var result_avarage = Math.round(all_sum / arr_nums.length);
       h1.innerText = PHRASES.say_avarage_num + result_avarage;
     }
 
